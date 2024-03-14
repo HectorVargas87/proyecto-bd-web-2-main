@@ -1,26 +1,40 @@
+
 import { Schema, model } from 'mongoose'
 import { Category, CategoryModel } from '../types/category.type'
 import { USER_REFERENCE } from './user.model'
 
-export const CATEGORY_REFERENCE = 'Category'
+import { Schema, model } from 'mongoose';
 
-const Categories = new Schema<Category, CategoryModel>({
-  name: {
+export const MOVIE_REFERENCE = 'MovieList';
+
+// Esquema para las películas
+const MovieSchema = new Schema({
+  title: {
     type: String,
     required: true,
     unique: true,
-    index: true,
     trim: true
+  },
+  genre: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  releaseYear: {
+    type: Number,
+    required: true
   },
   description: {
     type: String,
     required: false,
     trim: true
   },
+  //Asociar las películas a usuarios
   user: {
     type: Schema.Types.ObjectId,
     ref: USER_REFERENCE
   }
-})
+});
 
-export default model(CATEGORY_REFERENCE, Categories)
+// Exporta el modelo de película
+export default model(MOVIE_REFERENCE, MovieSchema);
